@@ -1,0 +1,681 @@
+classdef //classname < matlab.apps.AppBase
+
+    % Properties that correspond to app components
+    properties (Access = public)
+        UIFigure            matlab.ui.Figure
+        GridLayout          matlab.ui.container.GridLayout
+        LeftPanel           matlab.ui.container.Panel
+        Image               matlab.ui.control.Image
+        DButton             matlab.ui.control.Button
+        CButton             matlab.ui.control.Button
+        BButton             matlab.ui.control.Button
+        AButton             matlab.ui.control.Button
+        DTMFGENERATORLabel  matlab.ui.control.Label
+        Button_12           matlab.ui.control.Button
+        Button_11           matlab.ui.control.Button
+        Button_10           matlab.ui.control.Button
+        Button_9            matlab.ui.control.Button
+        Button_8            matlab.ui.control.Button
+        Button_7            matlab.ui.control.Button
+        Button_6            matlab.ui.control.Button
+        Button_5            matlab.ui.control.Button
+        Button_4            matlab.ui.control.Button
+        Button_3            matlab.ui.control.Button
+        Button_2            matlab.ui.control.Button
+        Button              matlab.ui.control.Button
+        CenterPanel         matlab.ui.container.Panel
+        UIAxes2             matlab.ui.control.UIAxes
+        UIAxes              matlab.ui.control.UIAxes
+        RightPanel          matlab.ui.container.Panel
+        DTMFDETECTIONLabel  matlab.ui.control.Label
+        NumbersButton       matlab.ui.control.Button
+        Label               matlab.ui.control.Label
+    end
+
+    % Properties that correspond to apps with auto-reflow
+    properties (Access = private)
+        onePanelWidth = 576;
+        twoPanelWidth = 768;
+    end
+
+    
+    properties (Access = private)
+        fs=8000; % samplingfrequency
+        N=205;%NO.OF SAMPLES
+         k=0:205-1; %timeperiod
+         maxFrequencies ,%maximum frequency
+         label,%display of number
+         
+        
+    end
+    
+    methods (Access = private)
+        
+        function y  = func(~,f1,f2)
+            app.fs=8000;
+            app.N=205;
+            flow = sin(2*pi*(f1*(0:app.N-1)/(app.fs)));%lowerfrequency
+            fhigh = sin(2*pi*(f2*(0:app.N-1)/(app.fs)));%higherfrequency
+            y = flow+fhigh;
+            
+        end
+        
+        
+    end
+    
+
+    % Callbacks that handle component events
+    methods (Access = private)
+
+        % Button pushed function: Button
+        function ButtonPushed(app, event)
+            y1 = func(app,697,1209);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude') 
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+            
+         app.NumbersButtonPushed
+
+        end
+
+        % Button pushed function: Button_2
+        function Button_2Pushed(app, event)
+         y1 = func(app,697,1336);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude')  
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed
+        end
+
+        % Button pushed function: Button_3
+        function Button_3Pushed(app, event)
+         y1 = func(app,697,1477);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude') 
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed
+        end
+
+        % Button pushed function: Button_4
+        function Button_4Pushed(app, event)
+         y1 = func(app,770,1209);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude')  
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed
+        end
+
+        % Button pushed function: Button_5
+        function Button_5Pushed(app, event)
+         y1 = func(app,770,1336);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude') 
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed
+        end
+
+        % Button pushed function: Button_6
+        function Button_6Pushed(app, event)
+         y1 = func(app,770,1477);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude') 
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed
+        end
+
+        % Button pushed function: Button_7
+        function Button_7Pushed(app, event)
+         y1 = func(app,852,1209);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude') 
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed
+        end
+
+        % Button pushed function: Button_8
+        function Button_8Pushed(app, event)
+         y1 = func(app,852,1336);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude') 
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed
+        end
+
+        % Button pushed function: Button_9
+        function Button_9Pushed(app, event)
+         y1 = func(app,852,1477);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude')
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed
+        end
+
+        % Button pushed function: Button_10
+        function Button_10Pushed(app, event)
+         y1 = func(app,941,1209);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude') 
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed
+        end
+
+        % Button pushed function: Button_11
+        function Button_11Pushed(app, event)
+          y1 = func(app,941,1336);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude') 
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed
+        end
+
+        % Button pushed function: Button_12
+        function Button_12Pushed(app, event)
+     y1 = func(app,941,1477);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude')
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed
+        end
+
+        % Button pushed function: NumbersButton
+        function NumbersButtonPushed(app, event)
+
+    if isequal(app.maxFrequencies, [1209 697])
+                app.Label.Text = 'Button 1 Pressed';
+    elseif isequal(app.maxFrequencies, [697 1336])
+               app.Label.Text = 'Button 2 Pressed';
+    elseif isequal(app.maxFrequencies, [1477  697])
+              app.Label.Text ='Button 3 Pressed';
+    elseif isequal(app.maxFrequencies, [1209 770])
+               app.Label.Text = 'Button 4 Pressed';
+    elseif isequal(app.maxFrequencies, [1336 770])
+               app.Label.Text = 'Button 5 Pressed';
+    elseif isequal(app.maxFrequencies, [1477 770])
+               app.Label.Text = 'Button 6 Pressed';
+    elseif isequal(app.maxFrequencies, [1209 852])
+               app.Label.Text = 'Button 7 Pressed';
+    elseif isequal(app.maxFrequencies, [852 1336])
+               app.Label.Text = 'Button 8 Pressed';
+    elseif isequal(app.maxFrequencies, [1477 852])
+               app.Label.Text = 'Button 9 Pressed';
+    elseif isequal(app.maxFrequencies, [1209 941])
+               app.Label.Text = 'Button # Pressed';
+    elseif isequal(app.maxFrequencies, [941 1336])
+                app.Label.Text ='Button 0 Pressed';
+    elseif isequal(app.maxFrequencies, [941 1477])
+                app.Label.Text ='Button * Pressed';
+    elseif isequal(app.maxFrequencies, [1633 697])
+                app.Label.Text ='Button A Pressed';
+    elseif isequal(app.maxFrequencies, [1633 770])
+                app.Label.Text ='Button B Pressed';
+    elseif isequal(app.maxFrequencies, [1633 852])
+                app.Label.Text ='Button C Pressed';
+    elseif isequal(app.maxFrequencies, [941 1633])
+                app.Label.Text ='Button D Pressed';
+    else
+        app.Label.Text ='unknown Button pressed';    
+    end
+        end
+
+        % Button pushed function: AButton
+        function AButtonPushed(app, event)
+           y1 = func(app,697,1633);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude')  
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed 
+        end
+
+        % Button pushed function: BButton
+        function BButtonPushed(app, event)
+        y1 = func(app,770,1633);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude')  
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed    
+        end
+
+        % Button pushed function: CButton
+        function CButtonPushed(app, event)
+        y1 = func(app,852,1633);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude')  
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed    
+        end
+
+        % Button pushed function: DButton
+        function DButtonPushed(app, event)
+          y1 = func(app,941,1633);
+             sound(y1,app.fs); 
+            plot(app.UIAxes,app.k,y1)
+            app.N = 205;
+f = [697 770 852 941 1209 1336 1477 1633];
+freq_indices = round(f/app.fs*app.N) + 1;   
+dft_data = goertzel(y1,freq_indices);
+stem(app.UIAxes2,f,abs(dft_data))
+xlabel(app.UIAxes2,'Frequency (Hz)')
+ylabel(app.UIAxes2,'DFT Magnitude')  
+[~, sortedIndices] = sort(abs(dft_data), 'descend');
+            app.maxFrequencies = f(sortedIndices(1:2));
+            disp(['Max Frequencies: ', num2str(app.maxFrequencies)]);
+         app.NumbersButtonPushed  
+        end
+
+        % Changes arrangement of the app based on UIFigure width
+        function updateAppLayout(app, event)
+            currentFigureWidth = app.UIFigure.Position(3);
+            if(currentFigureWidth <= app.onePanelWidth)
+                % Change to a 3x1 grid
+                app.GridLayout.RowHeight = {480, 480, 480};
+                app.GridLayout.ColumnWidth = {'1x'};
+                app.CenterPanel.Layout.Row = 1;
+                app.CenterPanel.Layout.Column = 1;
+                app.LeftPanel.Layout.Row = 2;
+                app.LeftPanel.Layout.Column = 1;
+                app.RightPanel.Layout.Row = 3;
+                app.RightPanel.Layout.Column = 1;
+            elseif (currentFigureWidth > app.onePanelWidth && currentFigureWidth <= app.twoPanelWidth)
+                % Change to a 2x2 grid
+                app.GridLayout.RowHeight = {480, 480};
+                app.GridLayout.ColumnWidth = {'1x', '1x'};
+                app.CenterPanel.Layout.Row = 1;
+                app.CenterPanel.Layout.Column = [1,2];
+                app.LeftPanel.Layout.Row = 2;
+                app.LeftPanel.Layout.Column = 1;
+                app.RightPanel.Layout.Row = 2;
+                app.RightPanel.Layout.Column = 2;
+            else
+                % Change to a 1x3 grid
+                app.GridLayout.RowHeight = {'1x'};
+                app.GridLayout.ColumnWidth = {288, '1x', 191};
+                app.LeftPanel.Layout.Row = 1;
+                app.LeftPanel.Layout.Column = 1;
+                app.CenterPanel.Layout.Row = 1;
+                app.CenterPanel.Layout.Column = 2;
+                app.RightPanel.Layout.Row = 1;
+                app.RightPanel.Layout.Column = 3;
+            end
+        end
+    end
+
+    % Component initialization
+    methods (Access = private)
+
+        % Create UIFigure and components
+        function createComponents(app)
+
+            % Get the file path for locating images
+            pathToMLAPP = fileparts(mfilename('fullpath'));
+
+            % Create UIFigure and hide until all components are created
+            app.UIFigure = uifigure('Visible', 'off');
+            app.UIFigure.AutoResizeChildren = 'off';
+            app.UIFigure.Position = [100 100 860 480];
+            app.UIFigure.Name = 'MATLAB App';
+            app.UIFigure.SizeChangedFcn = createCallbackFcn(app, @updateAppLayout, true);
+
+            % Create GridLayout
+            app.GridLayout = uigridlayout(app.UIFigure);
+            app.GridLayout.ColumnWidth = {288, '1x', 191};
+            app.GridLayout.RowHeight = {'1x'};
+            app.GridLayout.ColumnSpacing = 0;
+            app.GridLayout.RowSpacing = 0;
+            app.GridLayout.Padding = [0 0 0 0];
+            app.GridLayout.Scrollable = 'on';
+
+            % Create LeftPanel
+            app.LeftPanel = uipanel(app.GridLayout);
+            app.LeftPanel.BackgroundColor = [0.2706 0.1961 0.1176];
+            app.LeftPanel.Layout.Row = 1;
+            app.LeftPanel.Layout.Column = 1;
+
+            % Create Button
+            app.Button = uibutton(app.LeftPanel, 'push');
+            app.Button.ButtonPushedFcn = createCallbackFcn(app, @ButtonPushed, true);
+            app.Button.FontWeight = 'bold';
+            app.Button.Position = [23 242 47 23];
+            app.Button.Text = '1';
+
+            % Create Button_2
+            app.Button_2 = uibutton(app.LeftPanel, 'push');
+            app.Button_2.ButtonPushedFcn = createCallbackFcn(app, @Button_2Pushed, true);
+            app.Button_2.FontWeight = 'bold';
+            app.Button_2.Position = [83 242 53 23];
+            app.Button_2.Text = '2';
+
+            % Create Button_3
+            app.Button_3 = uibutton(app.LeftPanel, 'push');
+            app.Button_3.ButtonPushedFcn = createCallbackFcn(app, @Button_3Pushed, true);
+            app.Button_3.FontWeight = 'bold';
+            app.Button_3.Position = [151 242 47 23];
+            app.Button_3.Text = '3';
+
+            % Create Button_4
+            app.Button_4 = uibutton(app.LeftPanel, 'push');
+            app.Button_4.ButtonPushedFcn = createCallbackFcn(app, @Button_4Pushed, true);
+            app.Button_4.FontWeight = 'bold';
+            app.Button_4.Position = [23 181 47 23];
+            app.Button_4.Text = '4';
+
+            % Create Button_5
+            app.Button_5 = uibutton(app.LeftPanel, 'push');
+            app.Button_5.ButtonPushedFcn = createCallbackFcn(app, @Button_5Pushed, true);
+            app.Button_5.FontWeight = 'bold';
+            app.Button_5.Position = [83 181 53 23];
+            app.Button_5.Text = '5';
+
+            % Create Button_6
+            app.Button_6 = uibutton(app.LeftPanel, 'push');
+            app.Button_6.ButtonPushedFcn = createCallbackFcn(app, @Button_6Pushed, true);
+            app.Button_6.BackgroundColor = [0.902 0.902 0.902];
+            app.Button_6.FontWeight = 'bold';
+            app.Button_6.Position = [153 181 47 23];
+            app.Button_6.Text = '6';
+
+            % Create Button_7
+            app.Button_7 = uibutton(app.LeftPanel, 'push');
+            app.Button_7.ButtonPushedFcn = createCallbackFcn(app, @Button_7Pushed, true);
+            app.Button_7.FontWeight = 'bold';
+            app.Button_7.Position = [23 118 47 23];
+            app.Button_7.Text = '7';
+
+            % Create Button_8
+            app.Button_8 = uibutton(app.LeftPanel, 'push');
+            app.Button_8.ButtonPushedFcn = createCallbackFcn(app, @Button_8Pushed, true);
+            app.Button_8.FontWeight = 'bold';
+            app.Button_8.Position = [83 118 53 23];
+            app.Button_8.Text = '8';
+
+            % Create Button_9
+            app.Button_9 = uibutton(app.LeftPanel, 'push');
+            app.Button_9.ButtonPushedFcn = createCallbackFcn(app, @Button_9Pushed, true);
+            app.Button_9.FontWeight = 'bold';
+            app.Button_9.Position = [151 118 49 23];
+            app.Button_9.Text = '9';
+
+            % Create Button_10
+            app.Button_10 = uibutton(app.LeftPanel, 'push');
+            app.Button_10.ButtonPushedFcn = createCallbackFcn(app, @Button_10Pushed, true);
+            app.Button_10.FontWeight = 'bold';
+            app.Button_10.Position = [151 65 47 23];
+            app.Button_10.Text = '#';
+
+            % Create Button_11
+            app.Button_11 = uibutton(app.LeftPanel, 'push');
+            app.Button_11.ButtonPushedFcn = createCallbackFcn(app, @Button_11Pushed, true);
+            app.Button_11.FontWeight = 'bold';
+            app.Button_11.Position = [83 65 53 23];
+            app.Button_11.Text = '0';
+
+            % Create Button_12
+            app.Button_12 = uibutton(app.LeftPanel, 'push');
+            app.Button_12.ButtonPushedFcn = createCallbackFcn(app, @Button_12Pushed, true);
+            app.Button_12.FontWeight = 'bold';
+            app.Button_12.Position = [23 65 47 23];
+            app.Button_12.Text = '*';
+
+            % Create DTMFGENERATORLabel
+            app.DTMFGENERATORLabel = uilabel(app.LeftPanel);
+            app.DTMFGENERATORLabel.FontName = 'Arial Black';
+            app.DTMFGENERATORLabel.FontSize = 18;
+            app.DTMFGENERATORLabel.FontWeight = 'bold';
+            app.DTMFGENERATORLabel.FontColor = [0.4196 0.7255 0.9294];
+            app.DTMFGENERATORLabel.Position = [48 287 192 24];
+            app.DTMFGENERATORLabel.Text = 'DTMF GENERATOR';
+
+            % Create AButton
+            app.AButton = uibutton(app.LeftPanel, 'push');
+            app.AButton.ButtonPushedFcn = createCallbackFcn(app, @AButtonPushed, true);
+            app.AButton.FontWeight = 'bold';
+            app.AButton.Position = [208 242 47 23];
+            app.AButton.Text = 'A';
+
+            % Create BButton
+            app.BButton = uibutton(app.LeftPanel, 'push');
+            app.BButton.ButtonPushedFcn = createCallbackFcn(app, @BButtonPushed, true);
+            app.BButton.FontWeight = 'bold';
+            app.BButton.Position = [208 181 47 23];
+            app.BButton.Text = 'B';
+
+            % Create CButton
+            app.CButton = uibutton(app.LeftPanel, 'push');
+            app.CButton.ButtonPushedFcn = createCallbackFcn(app, @CButtonPushed, true);
+            app.CButton.FontWeight = 'bold';
+            app.CButton.Position = [208 118 47 23];
+            app.CButton.Text = 'C';
+
+            % Create DButton
+            app.DButton = uibutton(app.LeftPanel, 'push');
+            app.DButton.ButtonPushedFcn = createCallbackFcn(app, @DButtonPushed, true);
+            app.DButton.FontWeight = 'bold';
+            app.DButton.Position = [209 65 47 23];
+            app.DButton.Text = 'D';
+
+            % Create Image
+            app.Image = uiimage(app.LeftPanel);
+            app.Image.Position = [7 317 251 155];
+            app.Image.ImageSource = fullfile(pathToMLAPP, '9009710_0.jpg');
+
+            % Create CenterPanel
+            app.CenterPanel = uipanel(app.GridLayout);
+            app.CenterPanel.BackgroundColor = [0.5098 0.6784 0.5765];
+            app.CenterPanel.Layout.Row = 1;
+            app.CenterPanel.Layout.Column = 2;
+
+            % Create UIAxes
+            app.UIAxes = uiaxes(app.CenterPanel);
+            title(app.UIAxes, 'DTMF TONE')
+            xlabel(app.UIAxes, 'X')
+            ylabel(app.UIAxes, 'Y')
+            zlabel(app.UIAxes, 'Z')
+            app.UIAxes.XTick = [0 50 100 150 200];
+            app.UIAxes.XTickLabel = {'0'; '50'; '100'; '150'; '200'};
+            app.UIAxes.Position = [41 277 300 185];
+
+            % Create UIAxes2
+            app.UIAxes2 = uiaxes(app.CenterPanel);
+            title(app.UIAxes2, 'GOERTZAL ')
+            xlabel(app.UIAxes2, 'X')
+            ylabel(app.UIAxes2, 'Y')
+            zlabel(app.UIAxes2, 'Z')
+            app.UIAxes2.XTick = [697 770 852 941 1209 1336 1477 1633];
+            app.UIAxes2.XTickLabel = {'697'; '770'; '852'; '941'; '1209'; '1336'; '1477'; '1633'};
+            app.UIAxes2.YTick = [0 50 100 150 200 250];
+            app.UIAxes2.YTickLabel = {'0'; '50'; '100'; '150'; '200'; '250'};
+            app.UIAxes2.Position = [41 37 300 185];
+
+            % Create RightPanel
+            app.RightPanel = uipanel(app.GridLayout);
+            app.RightPanel.BackgroundColor = [0.8118 0.7882 0.7059];
+            app.RightPanel.Layout.Row = 1;
+            app.RightPanel.Layout.Column = 3;
+
+            % Create Label
+            app.Label = uilabel(app.RightPanel);
+            app.Label.BackgroundColor = [0.7686 0.5451 0.9098];
+            app.Label.HorizontalAlignment = 'center';
+            app.Label.FontSize = 18;
+            app.Label.FontWeight = 'bold';
+            app.Label.FontAngle = 'italic';
+            app.Label.Position = [7 111 177 285];
+
+            % Create NumbersButton
+            app.NumbersButton = uibutton(app.RightPanel, 'push');
+            app.NumbersButton.ButtonPushedFcn = createCallbackFcn(app, @NumbersButtonPushed, true);
+            app.NumbersButton.Position = [49 65 100 23];
+            app.NumbersButton.Text = 'Numbers';
+
+            % Create DTMFDETECTIONLabel
+            app.DTMFDETECTIONLabel = uilabel(app.RightPanel);
+            app.DTMFDETECTIONLabel.FontName = 'Arial Black';
+            app.DTMFDETECTIONLabel.FontSize = 18;
+            app.DTMFDETECTIONLabel.FontColor = [0.549 0.1059 0.7686];
+            app.DTMFDETECTIONLabel.Position = [7 386 184 88];
+            app.DTMFDETECTIONLabel.Text = 'DTMF DETECTION';
+
+            % Show the figure after all components are created
+            app.UIFigure.Visible = 'on';
+        end
+    end
+
+    % App creation and deletion
+    methods (Access = public)
+
+        % Construct app
+        function app = kalyan3
+
+            % Create UIFigure and components
+            createComponents(app)
+
+            % Register the app with App Designer
+            registerApp(app, app.UIFigure)
+
+            if nargout == 0
+                clear app
+            end
+        end
+
+        % Code that executes before app deletion
+        function delete(app)
+
+            % Delete UIFigure when app is deleted
+            delete(app.UIFigure)
+        end
+    end
+end
